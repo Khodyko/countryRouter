@@ -15,14 +15,15 @@ import java.io.Serializable;
 public class CountryBoard implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JoinColumn(name = "id_country")
-    @ManyToOne(targetEntity = Country.class)
+//    @ManyToOne(targetEntity = Country.class)
     private Long idCountry;
 
     @JoinColumn(name="id_board_country")
-    @ManyToOne(targetEntity = Country.class)
+//    @ManyToOne(targetEntity = Country.class)
     private Long idBoardingCountry;
 
     public CountryBoard(Long idCountry, Long idBoardingCountry) {

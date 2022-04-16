@@ -39,16 +39,16 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public CountryDto createCountry(CountryDto countryDto) {
-        Country countryForSaving=countryRepo.save(converter.DtoToCountry(countryDto));
-        Long countryForSavingId=countryForSaving.getId();
+        Country countryForSaving = countryRepo.save(converter.DtoToCountry(countryDto));
+        Long countryForSavingId = countryForSaving.getId();
         //fixme make it by one call of DB
-        List<Country> countryBoardedList = countryDto.getBoardCountryCodes()
-                .stream().map(countryRepo::getCountryByCode)
+        List<Long> idCountryBoardedList = countryDto.getBoardCountryCodes().stream()
+                .map(countryRepo::getCountryByCode)
+                .map(a -> a.getId())
                 .collect(Collectors.toList());
-        for (int i = 0; i <countryBoardedList.size() ; i++) {
+        for (int i = 0; i < idCountryBoardedList.size(); i++) {
             countryBoardsRepository.save(
-                    new CountryBoard(countryForSavingId,countryBoardedList.get(i).getId()));
-
+                    new CountryBoard(countryForSavingId, idCountryBoardedList.get(i)));
         }
 
         return null;
@@ -65,10 +65,29 @@ public class CountryServiceImpl implements CountryService {
     }
 
     public void createCountryList(List<CountryDto> countryDtoList) {
-        Map<Country, List<Long>> countryBroadCountryIdMap=new HashMap<>();
-        for (CountryDto countryDto:countryDtoList) {
-
+        Country country = null;
+        List<Long> ids = null;
+        Map<Long, List<String>> countryBroadCountryIdMap = new HashMap<>();
+        for (CountryDto countryDto : countryDtoList) {
+            country = countryRepo.save(converter.DtoToCountry(countryDto));
+            countryBroadCountryIdMap.put(country.getId(), countryDto.getBoardCountryCodes());
         }
+        for (Map.Entry<Long, List<String>> entry : countryBroadCountryIdMap.entrySet()) {
 
+                //fixme repeat (separate method)
+
+                List<Long> idCountryBoardedList = entry.getValue().stream()
+                        .map(countryRepo::getCountryByCode)
+                        .map(a -> a.getId())
+                        .collect(Collectors.toList());
+                for (int i = 0; i < idCountryBoardedList.size(); i++) {
+                    System.out.println("loop "+i);
+                    Long asddadasda=idCountryBoardedList.get(i);
+                    countryBoardsRepository.save(
+                            new CountryBoard(entry.getKey(), asddadasda));
+            }
+        }
     }
+
+
 }

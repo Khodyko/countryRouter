@@ -16,6 +16,6 @@ CREATE TABLE country_board
     id_country       INT NOT NULL,
     id_board_country INT NOT NULL,
     CONSTRAINT fk_country FOREIGN KEY (id_country) REFERENCES country (id),
-    CONSTRAINT fk_board_country FOREIGN KEY (id_board_country) REFERENCES country (id),
+    CONSTRAINT fk_board_country FOREIGN KEY (id_board_country) REFERENCES country (id)
 
 );
