@@ -11,10 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,62 +30,72 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public List<CountryDto> getCountryList(CountryDto countryDto) {
-
-        return null;
+    public List<CountryDto> getCountryList() {
+        List<Country> countryList = (List<Country>) countryRepo.findAll();
+        return countryList.stream()
+                .map(country -> converter.countryToDto(country)).collect(Collectors.toList());
     }
 
-    @Override
-    public CountryDto createCountry(CountryDto countryDto) {
-        Country countryForSaving = countryRepo.save(converter.DtoToCountry(countryDto));
-        Long countryForSavingId = countryForSaving.getId();
-        //fixme make it by one call of DB
-        List<Long> idCountryBoardedList = countryDto.getBoardCountryCodes().stream()
-                .map(countryRepo::getCountryByCode)
-                .map(a -> a.getId())
-                .collect(Collectors.toList());
-        for (int i = 0; i < idCountryBoardedList.size(); i++) {
-            countryBoardsRepository.save(
-                    new CountryBoard(countryForSavingId, idCountryBoardedList.get(i)));
-        }
 
-        return null;
+
+    @Override
+    public CountryDto createCountry(CountryDto countryDto) throws Exception {
+        Set<CountryBoard> countryBoardSet=new HashSet<>();
+        Country countryForSaving = countryRepo.save(converter.DtoToCountry(countryDto,countryBoardSet));
+        List<Country> countryBoardedList=countryDto.getCodesOfBoardedCountries()
+                .stream().map(code->countryRepo.findCountryByCode(code))
+                .collect(Collectors.toList());
+        for (int i = 0; i < countryBoardedList.size(); i++) {
+            countryBoardsRepository.save(
+                    new CountryBoard(countryForSaving, countryBoardedList.get(i)));
+        }
+        //fixme answer without part
+        return countryDto;
     }
 
     @Override
     public CountryDto putCountry(CountryDto countryDto) {
-        return null;
+        Set<CountryBoard> countryBoardSet=new HashSet<>();
+        Country countryForSaving = countryRepo.save(converter.DtoToCountry(countryDto,countryBoardSet));
+        List<Country> countryBoardedList=countryDto.getCodesOfBoardedCountries()
+                .stream().map(code->countryRepo.findCountryByCode(code))
+                .collect(Collectors.toList());
+        for (int i = 0; i < countryBoardedList.size(); i++) {
+            countryBoardsRepository.save(
+                    new CountryBoard(countryForSaving, countryBoardedList.get(i)));
+        }
+        //fixme make it by one call of DB
+        //fixme answer without part
+        return countryDto;
     }
 
     @Override
     public void deleteCountry(Long id) {
-
+        countryRepo.deleteById(id);
     }
 
     public void createCountryList(List<CountryDto> countryDtoList) {
-        Country country = null;
-        List<Long> ids = null;
-        Map<Long, List<String>> countryBroadCountryIdMap = new HashMap<>();
+        Country country;
+        Map<Country, List<String>> countryBroadCountryIdMap = new HashMap<>();
         for (CountryDto countryDto : countryDtoList) {
-            country = countryRepo.save(converter.DtoToCountry(countryDto));
-            countryBroadCountryIdMap.put(country.getId(), countryDto.getBoardCountryCodes());
+            country = countryRepo.save(converter.DtoToCountry(countryDto,
+                            countryDto.getCodesOfBoardedCountries().stream()
+                                    //fixme make sql
+                                    .map(countryBoardsRepository::findCountryBoardByCountryBoarded_Code)
+                                    .collect(Collectors.toSet()))
+            );
+            countryBroadCountryIdMap.put(country, countryDto.getCodesOfBoardedCountries());
         }
-        for (Map.Entry<Long, List<String>> entry : countryBroadCountryIdMap.entrySet()) {
-
-                //fixme repeat (separate method)
-
-                List<Long> idCountryBoardedList = entry.getValue().stream()
-                        .map(countryRepo::getCountryByCode)
-                        .map(a -> a.getId())
-                        .collect(Collectors.toList());
-                for (int i = 0; i < idCountryBoardedList.size(); i++) {
-                    System.out.println("loop "+i);
-                    Long asddadasda=idCountryBoardedList.get(i);
-                    countryBoardsRepository.save(
-                            new CountryBoard(entry.getKey(), asddadasda));
+        for (Map.Entry<Country, List<String>> entry : countryBroadCountryIdMap.entrySet()) {
+            //fixme repeat (separate method)
+            List<Country> countryBoardedList = entry.getValue().stream()
+                    .map(countryRepo::findCountryByCode)
+                    .collect(Collectors.toList());
+            for (int i = 0; i < countryBoardedList.size(); i++) {
+                System.out.println("index=" + i);
+                countryBoardsRepository.save(
+                        new CountryBoard(entry.getKey(), countryBoardedList.get(i)));
             }
         }
     }
-
-
 }

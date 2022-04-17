@@ -11,5 +11,5 @@ public class CountryResponse {
     private String code;
     private Double latitude;
     private Double longitude;
-    private List<String> boardCountryCodes;
+    private List<String> codesOfBoardedCountries;
 }

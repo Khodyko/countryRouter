@@ -1,16 +1,14 @@
 package com.example.countries.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
-import static javax.persistence.GenerationType.*;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
 @AllArgsConstructor
@@ -26,11 +24,19 @@ public class Country implements Serializable {
     private String code;
     private Double latitude;
     private Double longitude;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "countryMain",
+    cascade = CascadeType.PERSIST)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<CountryBoard> countryBoards;
 
-    public Country(String name, String code, Double latitude, Double longitude) {
+
+    public Country(String name, String code, Double latitude, Double longitude, Set<CountryBoard> countryBoards) {
         this.name = name;
         this.code = code;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.countryBoards = countryBoards;
     }
 }

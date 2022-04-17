@@ -13,9 +13,8 @@ CREATE TABLE country
 CREATE TABLE country_board
 (
     id               INT AUTO_INCREMENT PRIMARY KEY,
-    id_country       INT NOT NULL,
-    id_board_country INT NOT NULL,
+    id_country       INT NOT NULL REFERENCES country (id),
+    id_board_country INT NOT NULL REFERENCES public.country (id),
     CONSTRAINT fk_country FOREIGN KEY (id_country) REFERENCES country (id),
     CONSTRAINT fk_board_country FOREIGN KEY (id_board_country) REFERENCES country (id)
-
 );

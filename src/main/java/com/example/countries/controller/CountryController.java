@@ -26,7 +26,7 @@ public interface CountryController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    CountryResponse createCountry(@RequestBody CountryRequest countryRequest);
+    CountryResponse createCountry(@RequestBody CountryRequest countryRequest) throws Exception;
 
     @ResponseStatus(code = HttpStatus.OK)
     @PutMapping

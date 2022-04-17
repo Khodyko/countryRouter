@@ -9,8 +9,8 @@ public interface CountryService {
     //fixme transactions!!!!
     //fixme add algorithm choice mechanism
     LinkedList<String> getRouteFromTo(String algorithm, String from, String to);
-    List<CountryDto> getCountryList(CountryDto countryDto);
-    CountryDto createCountry(CountryDto countryDto);
+    List<CountryDto> getCountryList();
+    CountryDto createCountry(CountryDto countryDto) throws Exception;
     CountryDto putCountry(CountryDto countryDto);
     void deleteCountry(Long id);
 

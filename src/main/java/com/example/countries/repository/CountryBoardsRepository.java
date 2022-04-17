@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CountryBoardsRepository extends CrudRepository<CountryBoard, Long> {
+   CountryBoard findCountryBoardByCountryBoarded_Code(String code);
 }

@@ -18,16 +18,16 @@ public class CountryBoard implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "id_country")
-//    @ManyToOne(targetEntity = Country.class)
-    private Long idCountry;
+    @JoinColumn(name = "id_country", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Country countryMain;
 
-    @JoinColumn(name="id_board_country")
-//    @ManyToOne(targetEntity = Country.class)
-    private Long idBoardingCountry;
+    @JoinColumn(name = "id_board_country", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Country countryBoarded;
 
-    public CountryBoard(Long idCountry, Long idBoardingCountry) {
-        this.idCountry = idCountry;
-        this.idBoardingCountry = idBoardingCountry;
+    public CountryBoard(Country idCountry, Country idBoardingCountry) {
+        this.countryMain = idCountry;
+        this.countryBoarded = idBoardingCountry;
     }
 }
