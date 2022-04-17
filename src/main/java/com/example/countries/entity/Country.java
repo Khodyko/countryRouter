@@ -24,19 +24,19 @@ public class Country implements Serializable {
     private String code;
     private Double latitude;
     private Double longitude;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "countryBoardId.countryMain",
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idWrapper.countryMain",
     cascade = CascadeType.PERSIST)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<CountryBoard> countryBoards;
+    private Set<CountryBoardPair> countryBoardPairs;
 
 
-    public Country(String name, String code, Double latitude, Double longitude, Set<CountryBoard> countryBoards) {
+    public Country(String name, String code, Double latitude, Double longitude, Set<CountryBoardPair> countryBoardPairs) {
         this.name = name;
         this.code = code;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.countryBoards = countryBoards;
+        this.countryBoardPairs = countryBoardPairs;
     }
 }

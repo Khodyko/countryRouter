@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-public class CountryBoardId implements Serializable {
+public class IdWrapper implements Serializable {
     private static final long serialVersionUID = 1L;
     @JoinColumn(name = "id_country", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

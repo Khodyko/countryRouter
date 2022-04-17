@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS country;
-DROP TABLE IF EXISTS countryBoards;
+DROP TABLE IF EXISTS country_board_pair;
 
 CREATE TABLE country
 (
@@ -10,9 +10,8 @@ CREATE TABLE country
     longitude DOUBLE       NOT NULL
 );
 
-CREATE TABLE country_board
+CREATE TABLE country_board_pair
 (
---     id               INT AUTO_INCREMENT PRIMARY KEY,
     id_country       INT NOT NULL REFERENCES country (id),
     id_board_country INT NOT NULL REFERENCES country (id),
     CONSTRAINT fk_country FOREIGN KEY (id_country) REFERENCES country (id),

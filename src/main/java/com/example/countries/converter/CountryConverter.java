@@ -21,12 +21,12 @@ public interface CountryConverter {
 CountryDto requestToDto(CountryRequest countryRequest);
 CountryRequest DtoToRequest(CountryDto countryDto);
 CountryResponse DtoToResponse(CountryDto countryDto);
-Country DtoToCountry(CountryDto countryDto, Set<CountryBoard> countryBoards);
+Country DtoToCountry(CountryDto countryDto, Set<CountryBoardPair> countryBoardPairs);
 default CountryDto countryToDto(Country country){
     return new CountryDto(country.getId(),country.getName(),country.getCode(),
             country.getLatitude(), country.getLongitude(),
-            country.getCountryBoards().stream()
-                    .map(a->a.getCountryBoardId().getCountryBoarded().getCode())
+            country.getCountryBoardPairs().stream()
+                    .map(a->a.getIdWrapper().getCountryBoarded().getCode())
                     .collect(Collectors.toList()));
 }
 
