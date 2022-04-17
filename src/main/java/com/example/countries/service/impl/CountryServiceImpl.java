@@ -3,6 +3,7 @@ package com.example.countries.service.impl;
 import com.example.countries.converter.CountryConverter;
 import com.example.countries.entity.Country;
 import com.example.countries.entity.CountryBoard;
+import com.example.countries.entity.CountryBoardId;
 import com.example.countries.entity.CountryDto;
 import com.example.countries.repository.CountryBoardsRepository;
 import com.example.countries.repository.CountryRepository;
@@ -47,7 +48,9 @@ public class CountryServiceImpl implements CountryService {
                 .collect(Collectors.toList());
         for (int i = 0; i < countryBoardedList.size(); i++) {
             countryBoardsRepository.save(
-                    new CountryBoard(countryForSaving, countryBoardedList.get(i)));
+                    new CountryBoard(
+                            new CountryBoardId(countryForSaving, countryBoardedList.get(i))
+                    ));
         }
         //fixme answer without part
         return countryDto;
@@ -62,7 +65,9 @@ public class CountryServiceImpl implements CountryService {
                 .collect(Collectors.toList());
         for (int i = 0; i < countryBoardedList.size(); i++) {
             countryBoardsRepository.save(
-                    new CountryBoard(countryForSaving, countryBoardedList.get(i)));
+                    new CountryBoard(
+                            new CountryBoardId(countryForSaving, countryBoardedList.get(i))
+                    ));
         }
         //fixme make it by one call of DB
         //fixme answer without part
@@ -71,6 +76,7 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public void deleteCountry(Long id) {
+        countryBoardsRepository.deleteAllByCountryBoardId_CountryMain_Id(id);
         countryRepo.deleteById(id);
     }
 
@@ -81,7 +87,7 @@ public class CountryServiceImpl implements CountryService {
             country = countryRepo.save(converter.DtoToCountry(countryDto,
                             countryDto.getCodesOfBoardedCountries().stream()
                                     //fixme make sql
-                                    .map(countryBoardsRepository::findCountryBoardByCountryBoarded_Code)
+                                    .map(countryBoardsRepository::findCountryBoardsByCountryBoardId_CountryBoarded_Code)
                                     .collect(Collectors.toSet()))
             );
             countryBroadCountryIdMap.put(country, countryDto.getCodesOfBoardedCountries());
@@ -94,7 +100,9 @@ public class CountryServiceImpl implements CountryService {
             for (int i = 0; i < countryBoardedList.size(); i++) {
                 System.out.println("index=" + i);
                 countryBoardsRepository.save(
-                        new CountryBoard(entry.getKey(), countryBoardedList.get(i)));
+                        new CountryBoard(
+                                new CountryBoardId(entry.getKey(), countryBoardedList.get(i))
+                        ));
             }
         }
     }

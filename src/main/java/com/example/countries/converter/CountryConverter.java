@@ -26,7 +26,7 @@ default CountryDto countryToDto(Country country){
     return new CountryDto(country.getId(),country.getName(),country.getCode(),
             country.getLatitude(), country.getLongitude(),
             country.getCountryBoards().stream()
-                    .map(a->a.getCountryBoarded().getCode())
+                    .map(a->a.getCountryBoardId().getCountryBoarded().getCode())
                     .collect(Collectors.toList()));
 }
 

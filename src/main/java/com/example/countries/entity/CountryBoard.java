@@ -14,20 +14,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class CountryBoard implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @JoinColumn(name = "id_country", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Country countryMain;
-
-    @JoinColumn(name = "id_board_country", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Country countryBoarded;
-
-    public CountryBoard(Country idCountry, Country idBoardingCountry) {
-        this.countryMain = idCountry;
-        this.countryBoarded = idBoardingCountry;
-    }
+    //    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//    @Id
+//    @JoinColumn(name = "id_country", referencedColumnName = "id")
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Country countryMain;
+//    @Id
+//    @JoinColumn(name = "id_board_country", referencedColumnName = "id")
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Country countryBoarded;
+    @EmbeddedId
+    CountryBoardId countryBoardId;
 }

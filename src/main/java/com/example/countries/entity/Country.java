@@ -24,7 +24,7 @@ public class Country implements Serializable {
     private String code;
     private Double latitude;
     private Double longitude;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "countryMain",
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "countryBoardId.countryMain",
     cascade = CascadeType.PERSIST)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
