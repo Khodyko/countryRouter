@@ -1,4 +1,4 @@
-package com.example.countries.entity;
+package com.example.countries.entity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

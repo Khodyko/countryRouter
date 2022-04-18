@@ -1,9 +1,8 @@
 package com.example.countries.config;
 
 import com.example.countries.converter.JsonSpecificConverter;
-import com.example.countries.entity.CountryDto;
+import com.example.countries.entity.dto.CountryDto;
 import com.example.countries.service.impl.CountryServiceImpl;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;

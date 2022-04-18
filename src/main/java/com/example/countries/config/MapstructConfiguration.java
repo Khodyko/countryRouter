@@ -1,4 +1,4 @@
-package com.example.countries.converter;
+package com.example.countries.config;
 
 import org.mapstruct.MapperConfig;
 import org.mapstruct.ReportingPolicy;

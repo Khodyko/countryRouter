@@ -1,10 +1,10 @@
 package com.example.countries.service.impl;
 
 import com.example.countries.converter.CountryConverter;
-import com.example.countries.entity.Country;
-import com.example.countries.entity.CountryBoardPair;
-import com.example.countries.entity.IdWrapper;
-import com.example.countries.entity.CountryDto;
+import com.example.countries.entity.simpleEntity.Country;
+import com.example.countries.entity.simpleEntity.CountryBoardPair;
+import com.example.countries.entity.simpleEntity.IdWrapper;
+import com.example.countries.entity.dto.CountryDto;
 import com.example.countries.repository.CountryBoardPairRepo;
 import com.example.countries.repository.CountryRepo;
 import com.example.countries.service.CountryService;
@@ -37,7 +37,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public CountryDto createCountry(CountryDto countryDto) throws Exception {
+    public CountryDto createCountry(CountryDto countryDto) {
         Country country = countryRepo.save(converter.DtoToCountry(countryDto, new HashSet<CountryBoardPair>()));
         List<Country> countryBoardedList = countryDto.getCodesOfBoardedCountries()
                 .stream().map(code -> countryRepo.findCountryByCode(code))

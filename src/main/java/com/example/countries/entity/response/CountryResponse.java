@@ -1,11 +1,11 @@
-package com.example.countries.entity;
+package com.example.countries.entity.response;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class CountryRequest {
+public class CountryResponse {
     private Long id;
     private String name;
     private String code;

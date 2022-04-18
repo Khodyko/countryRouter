@@ -1,7 +1,7 @@
 package com.example.countries.converter;
 
-import com.example.countries.entity.Country;
-import com.example.countries.entity.CountryDto;
+import com.example.countries.entity.simpleEntity.Country;
+import com.example.countries.entity.dto.CountryDto;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This converter is used for reading from a specific json (task file)

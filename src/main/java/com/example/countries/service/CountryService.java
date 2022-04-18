@@ -1,6 +1,6 @@
 package com.example.countries.service;
 
-import com.example.countries.entity.CountryDto;
+import com.example.countries.entity.dto.CountryDto;
 
 import java.util.LinkedList;
 import java.util.List;

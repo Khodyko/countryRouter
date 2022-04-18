@@ -1,4 +1,4 @@
-package com.example.countries.entity;
+package com.example.countries.entity.simpleEntity;
 
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
@@ -10,6 +10,16 @@ import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+
+/**
+ * This is Entity of Country for work with Repository
+ * and in Service layer
+ * Use CountryDto, CountryRequest, CountryResponse for Controller
+ *
+ * @see com.example.countries.entity.dto.CountryDto
+ * @see com.example.countries.entity.request.CountryRequest
+ * @see com.example.countries.entity.response.CountryResponse
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,7 +40,6 @@ public class Country implements Serializable {
     @EqualsAndHashCode.Exclude
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<CountryBoardPair> countryBoardPairs;
-
 
     public Country(String name, String code, Double latitude, Double longitude, Set<CountryBoardPair> countryBoardPairs) {
         this.name = name;

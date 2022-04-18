@@ -1,6 +1,11 @@
 package com.example.countries.converter;
 
-import com.example.countries.entity.*;
+import com.example.countries.config.MapstructConfiguration;
+import com.example.countries.entity.dto.CountryDto;
+import com.example.countries.entity.request.CountryRequest;
+import com.example.countries.entity.response.CountryResponse;
+import com.example.countries.entity.simpleEntity.Country;
+import com.example.countries.entity.simpleEntity.CountryBoardPair;
 import org.mapstruct.Mapper;
 
 import java.util.Set;
