@@ -22,8 +22,8 @@ public class CountryRequest {
     @Size(min = 3, max=3)
     @NotNull
     private String code;
-    @DecimalMax(value = "90")
-    @DecimalMin(value = "-90")
+    @DecimalMax(value = "90.0")
+    @DecimalMin(value = "-90.0")
     @NotNull
     private Double latitude;
     @DecimalMax(value = "180.0")
