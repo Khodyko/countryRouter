@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * It's DTO entity of Country Entity.
- * @see com.example.countries.entity.simpleEntity.Country
+ * @see com.example.countries.entity.simple.Country
  */
 @Data
 @AllArgsConstructor
@@ -20,7 +20,7 @@ public class CountryDto {
     private Double latitude;
     private Double longitude;
     /**
-     * It's needed call method of repo to convert
+     * Call method of repo to convert
      * this field into Set<CountryBoardPair> countryBoardPairs
      * of Country Entity.
      */

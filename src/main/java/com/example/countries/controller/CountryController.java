@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * This interface contains main methods for work with Country entity.
  * DTO entities are used.
- * @see com.example.countries.entity.simpleEntity.Country
+ * @see com.example.countries.entity.simple.Country
  * @see com.example.countries.entity.dto.CountryDto
  * @see CountryResponse
  * @see CountryRequest

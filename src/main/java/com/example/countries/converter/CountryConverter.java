@@ -4,8 +4,8 @@ import com.example.countries.config.MapstructConfiguration;
 import com.example.countries.entity.dto.CountryDto;
 import com.example.countries.entity.request.CountryRequest;
 import com.example.countries.entity.response.CountryResponse;
-import com.example.countries.entity.simpleEntity.Country;
-import com.example.countries.entity.simpleEntity.CountryBoardPair;
+import com.example.countries.entity.simple.Country;
+import com.example.countries.entity.simple.CountryBoardPair;
 import org.mapstruct.Mapper;
 
 import java.util.Set;
@@ -23,11 +23,9 @@ public interface CountryConverter {
 
     CountryDto requestToDto(CountryRequest countryRequest);
 
-    CountryRequest DtoToRequest(CountryDto countryDto);
+    CountryResponse dtoToResponse(CountryDto countryDto);
 
-    CountryResponse DtoToResponse(CountryDto countryDto);
-
-    Country DtoToCountry(CountryDto countryDto, Set<CountryBoardPair> countryBoardPairs);
+    Country dtoToCountry(CountryDto countryDto, Set<CountryBoardPair> countryBoardPairs);
 
     default CountryDto countryToDto(Country country) {
         return new CountryDto(country.getId(), country.getName(), country.getCode(),

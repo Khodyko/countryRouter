@@ -1,6 +1,6 @@
 package com.example.countries.controller;
 
-import com.example.countries.entity.simpleEntity.Rout;
+import com.example.countries.entity.simple.Rout;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +20,6 @@ public interface RoutController {
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping("/{algorithm}/{from}/{to}")
     Rout getRouteFromTo(@PathVariable String algorithm,
-            @Size(min=3, max = 3) @PathVariable String from,
-            @Size(min=3, max = 3)@PathVariable String to);
+                        @Size(min=3, max = 3) @PathVariable String from,
+                        @Size(min=3, max = 3)@PathVariable String to);
 }

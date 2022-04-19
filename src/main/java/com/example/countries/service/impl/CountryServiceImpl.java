@@ -2,8 +2,8 @@ package com.example.countries.service.impl;
 
 import com.example.countries.converter.CountryConverter;
 import com.example.countries.entity.dto.CountryDto;
-import com.example.countries.entity.simpleEntity.Country;
-import com.example.countries.entity.simpleEntity.CountryBoardPair;
+import com.example.countries.entity.simple.Country;
+import com.example.countries.entity.simple.CountryBoardPair;
 import com.example.countries.repository.CountryBoardPairRepo;
 import com.example.countries.repository.CountryRepo;
 import com.example.countries.service.CountryService;
@@ -33,7 +33,7 @@ public class CountryServiceImpl implements CountryService {
     //by the one call. But it is done as it is done. Maybe in the next time I will be more clever.
     @Override
     public CountryDto createCountry(CountryDto countryDto) {
-        Country country = countryRepo.save(converter.DtoToCountry(countryDto, new HashSet<>()));
+        Country country = countryRepo.save(converter.dtoToCountry(countryDto, new HashSet<>()));
         //save country
         List<Country> countryBoardedList = countryDto.getCodesOfBoardedCountries().stream()
                 .map(countryRepo::findCountryByCode)
@@ -50,7 +50,7 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public CountryDto putCountry(CountryDto countryDto) {
-        Country country = countryRepo.save(converter.DtoToCountry(countryDto, new HashSet<>()));
+        Country country = countryRepo.save(converter.dtoToCountry(countryDto, new HashSet<>()));
         //put country
         List<Country> countryBoardedList = countryDto.getCodesOfBoardedCountries().stream()
                 .map(countryRepo::findCountryByCode)
@@ -77,7 +77,7 @@ public class CountryServiceImpl implements CountryService {
         Map<Country, List<String>> countryAndCodesBoardCountry = new HashMap<>();
         //save all countries
         for (CountryDto countryDto : countryDtoList) {
-            country = countryRepo.save(converter.DtoToCountry(countryDto, new HashSet<>()));
+            country = countryRepo.save(converter.dtoToCountry(countryDto, new HashSet<>()));
             countryAndCodesBoardCountry.put(country, countryDto.getCodesOfBoardedCountries());
         }
         //take all countryBoardPairs

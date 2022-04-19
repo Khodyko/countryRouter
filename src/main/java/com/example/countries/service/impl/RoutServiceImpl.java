@@ -1,8 +1,8 @@
 package com.example.countries.service.impl;
 
-import com.example.countries.entity.simpleEntity.Country;
-import com.example.countries.entity.simpleEntity.CountryBoardPair;
-import com.example.countries.entity.simpleEntity.Rout;
+import com.example.countries.entity.simple.Country;
+import com.example.countries.entity.simple.CountryBoardPair;
+import com.example.countries.entity.simple.Rout;
 import com.example.countries.repository.CountryRepo;
 import com.example.countries.service.impl.routServiceHelper.DistanceCalculator;
 import com.example.countries.service.RoutService;
@@ -23,7 +23,7 @@ public class RoutServiceImpl implements RoutService {
 
     private final CountryRepo countryRepo;
     private final DistanceCalculator distanceCalculator;
-    //It's huge method. Need refactor that.
+    //It's huge method. Need refactor.
     @Override
     public Rout getRouteByHaversine(String from, String to) {
         List<Country> routCountryList = new ArrayList<>();

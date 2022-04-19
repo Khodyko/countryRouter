@@ -25,7 +25,7 @@ public class CountryControllerImpl implements CountryController {
     @Override
     public List<CountryResponse> getCountryList() {
         return countryService.getCountryList().stream()
-                .map(converter::DtoToResponse)
+                .map(converter::dtoToResponse)
                 .collect(Collectors.toList());
     }
 
@@ -34,10 +34,8 @@ public class CountryControllerImpl implements CountryController {
         if(countryRequest.getId()!=null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);}
         CountryDto countryDto = converter.requestToDto(countryRequest);
-        System.out.println(countryDto);
-        System.out.println(countryRequest);
         CountryDto countryDtoFromDb = countryService.createCountry(countryDto);
-        return converter.DtoToResponse(countryDtoFromDb);
+        return converter.dtoToResponse(countryDtoFromDb);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class CountryControllerImpl implements CountryController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);}
         CountryDto countryDto = converter.requestToDto(countryRequest);
         CountryDto countryDtoFromDb = countryService.putCountry(countryDto);
-        return converter.DtoToResponse(countryDtoFromDb);
+        return converter.dtoToResponse(countryDtoFromDb);
     }
 
     @Override

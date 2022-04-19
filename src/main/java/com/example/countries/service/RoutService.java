@@ -1,6 +1,6 @@
 package com.example.countries.service;
 
-import com.example.countries.entity.simpleEntity.Rout;
+import com.example.countries.entity.simple.Rout;
 
 /**
  * This interface realised search of rout between the countries.

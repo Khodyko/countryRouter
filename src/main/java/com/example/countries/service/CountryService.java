@@ -8,7 +8,7 @@ import java.util.List;
  * Service of Country Entity.
  *
  * @see CountryDto
- * @see com.example.countries.entity.simpleEntity.Country
+ * @see com.example.countries.entity.simple.Country
  */
 public interface CountryService {
 

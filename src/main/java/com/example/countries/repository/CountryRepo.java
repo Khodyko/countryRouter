@@ -1,6 +1,6 @@
 package com.example.countries.repository;
 
-import com.example.countries.entity.simpleEntity.Country;
+import com.example.countries.entity.simple.Country;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

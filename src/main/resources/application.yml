@@ -13,4 +13,6 @@ init:
   data:
     json:
       path: https://raw.githubusercontent.com/mledoze/countries/master/countries.json
+earth:
+  radius: 6371000d
 #        src/main/resources/json/countries.json

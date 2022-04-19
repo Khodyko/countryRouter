@@ -1,7 +1,7 @@
 package com.example.countries.converter;
 
 import com.example.countries.entity.dto.CountryDto;
-import com.example.countries.entity.simpleEntity.Country;
+import com.example.countries.entity.simple.Country;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -38,13 +38,12 @@ public class JsonSpecificConverter {
             JSONArray jsonArray = (JSONArray) parser.parse(reader);
             for (Object o : jsonArray) {
                 if (o instanceof JSONObject) {
-                    //validate?
                     JSONObject name = (JSONObject) ((JSONObject) o).get("name");
                     String common = (String) name.get("common");
                     String cca3 = (String) ((JSONObject) o).get("cca3");
-                    JSONArray latlng = (JSONArray) ((JSONObject) o).get("latlng");
-                    Double latitude = Double.valueOf(String.valueOf(latlng.get(0)));
-                    Double longitude = Double.valueOf(String.valueOf(latlng.get(1)));
+                    JSONArray latLng = (JSONArray) ((JSONObject) o).get("latlng");
+                    Double latitude = Double.valueOf(String.valueOf(latLng.get(0)));
+                    Double longitude = Double.valueOf(String.valueOf(latLng.get(1)));
                     JSONArray borders = (JSONArray) ((JSONObject) o).get("borders");
                     codeOfBorderedCountries = new ArrayList<>();
                     for (Object border : borders) {

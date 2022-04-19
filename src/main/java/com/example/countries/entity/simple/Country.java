@@ -1,4 +1,4 @@
-package com.example.countries.entity.simpleEntity;
+package com.example.countries.entity.simple;
 
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;

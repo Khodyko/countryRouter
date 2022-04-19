@@ -1,14 +1,12 @@
 package com.example.countries.controller.impl;
 
 import com.example.countries.controller.RoutController;
-import com.example.countries.entity.simpleEntity.Rout;
+import com.example.countries.entity.simple.Rout;
 import com.example.countries.service.RoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor

@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * It's Responce entity of Country Entity.
- * @see com.example.countries.entity.simpleEntity.Country
+ * @see com.example.countries.entity.simple.Country
  */
 @Data
 public class CountryResponse {
