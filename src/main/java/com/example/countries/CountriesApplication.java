@@ -13,8 +13,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableTransactionManagement
 @EnableAutoConfiguration
 @ComponentScan(basePackages = { "com.example.countries.*" })
-@EnableWebMvc
-//@EntityScan("com.example.countries.*")
 public class CountriesApplication {
     public static void main(String[] args) {
         SpringApplication.run(CountriesApplication.class, args);

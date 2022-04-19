@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * This converter is used for reading from a specific json (task file)
  * to the Country entity and List of boards countries codes(String).
- * At the start of app this class used be Initializer
+ * At the start of app this class used by Initializer
  *
  * @see Country
  * @see com.example.countries.config.Initializer

@@ -8,14 +8,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
+
+/**
+ * This interface contains main methods for work with Country entity.
+ * DTO entities are used.
+ * @see com.example.countries.entity.simpleEntity.Country
+ * @see com.example.countries.entity.dto.CountryDto
+ * @see CountryResponse
+ * @see CountryRequest
+ * @see com.example.countries.converter.CountryConverter
+ */
 @RequestMapping("/countries")
 public interface CountryController {
 
-
-
     /**
      * It seems, pagination is needed there. But task doesn't contain that.
-     * @return
      */
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping

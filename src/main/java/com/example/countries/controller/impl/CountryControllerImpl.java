@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,6 @@ public class CountryControllerImpl implements CountryController {
     private final CountryServiceImpl countryService;
     private final CountryConverter converter;
 
-    //fixme Validate all inn data
     @Override
     public List<CountryResponse> getCountryList() {
         return countryService.getCountryList().stream()
@@ -34,7 +32,7 @@ public class CountryControllerImpl implements CountryController {
     @Override
     public CountryResponse createCountry(CountryRequest countryRequest) {
         if(countryRequest.getId()!=null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"country request must contain id");}
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);}
         CountryDto countryDto = converter.requestToDto(countryRequest);
         System.out.println(countryDto);
         System.out.println(countryRequest);
@@ -45,7 +43,7 @@ public class CountryControllerImpl implements CountryController {
     @Override
     public CountryResponse putCountry(CountryRequest countryRequest) {
         if(countryRequest.getId()==null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"country request mustn't contain id");}
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);}
         CountryDto countryDto = converter.requestToDto(countryRequest);
         CountryDto countryDtoFromDb = countryService.putCountry(countryDto);
         return converter.DtoToResponse(countryDtoFromDb);

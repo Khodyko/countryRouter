@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+/**
+ * It's Request entity of Country Entity
+ */
 @Data
 public class CountryRequest {
 

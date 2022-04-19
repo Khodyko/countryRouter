@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * It's DTO entity of Country Entity.
+ * @see com.example.countries.entity.simpleEntity.Country
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +19,11 @@ public class CountryDto {
     private String code;
     private Double latitude;
     private Double longitude;
+    /**
+     * It's needed call method of repo to convert
+     * this field into Set<CountryBoardPair> countryBoardPairs
+     * of Country Entity.
+     */
     private List<String> codesOfBoardedCountries;
 
     public CountryDto(String name, String code, Double latitude, Double longitude, List<String> boardCountryCodes) {

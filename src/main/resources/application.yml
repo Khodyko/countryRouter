@@ -4,13 +4,13 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
-  h2:
+    h2:
     console:
       enabled: true
       path: /console
-#property
+#      property
 init:
-    data:
-      json:
-        path: https://raw.githubusercontent.com/mledoze/countries/master/countries.json
+  data:
+    json:
+      path: https://raw.githubusercontent.com/mledoze/countries/master/countries.json
 #        src/main/resources/json/countries.json

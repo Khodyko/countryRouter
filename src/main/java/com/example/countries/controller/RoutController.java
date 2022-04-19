@@ -9,18 +9,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.constraints.Size;
 
-@RequestMapping("/countries/routing")
+/**
+ * This interface call the method of Service,
+ * that matches "algorithm" variable
+ * @see com.example.countries.service.RoutService
+ */
+@RequestMapping("/routing")
 public interface RoutController {
-
-    //fixme algorithm choice
-    @ResponseStatus(code = HttpStatus.OK)
-    @GetMapping("/hav/{from}/{to}")
-    Rout getRouteFromTo(@Size(min=3, max = 3) @PathVariable String from, @Size(min=3, max = 3)@PathVariable String to);
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping("/{algorithm}/{from}/{to}")
-    String getRoutExceptionAlgorithm(@PathVariable String algorithm,
-                                     @PathVariable String from, @PathVariable String to);
-
-
+    Rout getRouteFromTo(@PathVariable String algorithm,
+            @Size(min=3, max = 3) @PathVariable String from,
+            @Size(min=3, max = 3)@PathVariable String to);
 }

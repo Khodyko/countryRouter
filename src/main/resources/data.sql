@@ -4,8 +4,8 @@ DROP TABLE IF EXISTS country_board_pair;
 CREATE TABLE country
 (
     id        INT AUTO_INCREMENT PRIMARY KEY,
-    name      VARCHAR(250) NOT NULL,
-    code      VARCHAR(3)   NOT NULL,
+    name      VARCHAR(250) NOT NULL UNIQUE ,
+    code      VARCHAR(3)   NOT NULL UNIQUE,
     latitude  DOUBLE       NOT NULL,
     longitude DOUBLE       NOT NULL
 );

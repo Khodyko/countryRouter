@@ -9,6 +9,17 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+/**
+ * It's entity of relation Country and BoardCountry
+ * (Country entity ManyToMany relation to itself).
+ * EmbeddedId field (IdWrapper) is used to realise composite key
+ * for Hibernate.
+ * Specific Getters, Setters, Constructor are
+ * for more comfortable call of entity.
+ *
+ * @see Country
+ * @see IdWrapper
+ */
 @Entity
 @Data
 @Table(name = "country_board_pair")

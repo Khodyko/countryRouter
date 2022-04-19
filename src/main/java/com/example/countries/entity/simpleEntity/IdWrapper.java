@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Entity for realising composite key
+ * for Hibernate.
+ */
 @Data
 @Embeddable
 @AllArgsConstructor
