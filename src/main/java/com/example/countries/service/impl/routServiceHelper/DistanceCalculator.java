@@ -10,7 +10,7 @@ public class DistanceCalculator {
     @Value("${earth.radius}")
     private double earthRadius;
 
-    public Double getDistByHaversine(Double lat1, Double lng1, Double lat2, Double lng2) {
+    public Double getDistanceByHaversineAlgorithm(Double lat1, Double lng1, Double lat2, Double lng2) {
         double dLat = Math.toRadians(lat2-lat1);
         double dLng = Math.toRadians(lng2-lng1);
         double a = Math.sin(dLat/2) * Math.sin(dLat/2) +

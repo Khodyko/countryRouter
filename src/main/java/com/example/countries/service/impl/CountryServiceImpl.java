@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+
 @Service
 @AllArgsConstructor
 @Transactional
@@ -27,7 +30,7 @@ public class CountryServiceImpl implements CountryService {
     public List<CountryDto> getCountryList() {
         List<Country> countryList = (List<Country>) countryRepo.findAll();
         return countryList.stream()
-                .map(converter::countryToDto).collect(Collectors.toList());
+                .map(converter::countryToDto).collect(toList());
     }
     //Maybe it is better to make SQL QUERY to save Country and CountryBoardPair
     //by the one call. But it is done as it is done. Maybe in the next time I will be more clever.
@@ -37,13 +40,13 @@ public class CountryServiceImpl implements CountryService {
         //save country
         List<Country> countryBoardedList = countryDto.getCodesOfBoardedCountries().stream()
                 .map(countryRepo::findCountryByCode)
-                .collect(Collectors.toList());
+                .collect(toList());
         //save countryBoardPairs
         Set<CountryBoardPair> countryBoardPairList = countryBoardedList.stream()
                 .map(
                         countryBoarded -> new CountryBoardPair(country, countryBoarded)
                 )
-                .collect(Collectors.toSet());
+                .collect(toSet());
         country.setCountryBoardPairs(countryBoardPairList);
         return converter.countryToDto(country);
     }
@@ -54,13 +57,11 @@ public class CountryServiceImpl implements CountryService {
         //put country
         List<Country> countryBoardedList = countryDto.getCodesOfBoardedCountries().stream()
                 .map(countryRepo::findCountryByCode)
-                .collect(Collectors.toList());
+                .collect(toList());
         //put countryBoardPairs
         Set<CountryBoardPair> countryBoardPairList = countryBoardedList.stream()
-                .map(
-                        countryBoarded -> new CountryBoardPair(country, countryBoarded)
-                )
-                .collect(Collectors.toSet());
+                .map(countryBoarded -> new CountryBoardPair(country, countryBoarded))
+                .collect(toSet());
         country.setCountryBoardPairs(countryBoardPairList);
         return converter.countryToDto(country);
     }
@@ -84,10 +85,8 @@ public class CountryServiceImpl implements CountryService {
         for (Map.Entry<Country, List<String>> entry : countryAndCodesBoardCountry.entrySet()) {
             List<CountryBoardPair> countryBoardedList = entry.getValue().stream()
                     .map(countryRepo::findCountryByCode)
-                    .map(
-                            savedCountry -> new CountryBoardPair(entry.getKey(), savedCountry)
-                    )
-                    .collect(Collectors.toList());
+                    .map(savedCountry -> new CountryBoardPair(entry.getKey(), savedCountry))
+                    .collect(toList());
             countryBoardPairsForSaving.addAll(countryBoardedList);
         }
         //save all countryBoardPairs

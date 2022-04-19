@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * It's service for calculating of the best rout from country to other one.
@@ -37,17 +38,18 @@ public class RoutServiceImpl implements RoutService {
         }
         usedForSearchCountries.add(countryFrom);
         //I had an idea to make entity of these values, to change
-        // its condition in search. Maybe it can be more pretty. But I decided not risk.
+        // its condition in search. Maybe it can be more pretty. But I decided to do without risk.
         Double minLength = Double.MAX_VALUE;
         Double tempLength;
-        Country searchCountry = null;
+        Country searchCountry = countryFrom;
         routCountryList.add(countryFrom);
         badEndPointCountryList.add(countryFrom);
         while (true) {
             if (countryBoardedListFrom.contains(countryTo)) {
                 routCountryList.add(countryTo);
                 return new Rout(routCountryList.stream()
-                        .map(Country::getCode).collect(Collectors.toList()));
+                        .map(Country::getCode)
+                        .collect(toList()));
             }
             //?All countries around this country are used
             if (usedForSearchCountries.containsAll(countryBoardedListFrom)) {
@@ -65,13 +67,16 @@ public class RoutServiceImpl implements RoutService {
                     routCountryList.add(countryFrom);
                 }
             }
+            //search of minimal distance country
             for (int i = 0; i < countryBoardedListFrom.size(); i++) {
                 //skip if country was used in search
                 if (usedForSearchCountries.contains(countryBoardedListFrom.get(i))) {
-                    continue;
-                }
-                tempLength = distanceCalculator.getDistByHaversine(countryBoardedListFrom.get(i).getLatitude(),
-                        countryBoardedListFrom.get(i).getLongitude(), countryTo.getLatitude(), countryTo.getLongitude());
+                    continue;}
+                tempLength = distanceCalculator.getDistanceByHaversineAlgorithm(
+                        countryBoardedListFrom.get(i).getLatitude(),
+                        countryBoardedListFrom.get(i).getLongitude(),
+                        countryTo.getLatitude(),
+                        countryTo.getLongitude());
                 if (tempLength < minLength) {
                     searchCountry = countryBoardedListFrom.get(i);
                     minLength = tempLength;
@@ -88,7 +93,7 @@ public class RoutServiceImpl implements RoutService {
     private List<Country> getBoardedCountries(Country country) {
         return country.getCountryBoardPairs().stream()
                 .map(CountryBoardPair::getCountryBoarded)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
 }
