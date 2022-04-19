@@ -10,11 +10,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * This class used for start code initialization of
+ * app.
+ */
 @Component
 @RequiredArgsConstructor
 public class Initializer implements InitializingBean {
 
-    @Value("${init.data.json}")
+    @Value("${init.data.json.path}")
     private String jsonPath;
     private final JsonSpecificConverter jsonSpecificMapper;
     private final CountryServiceImpl countryService;

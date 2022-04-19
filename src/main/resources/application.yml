@@ -11,4 +11,6 @@ spring:
 #property
 init:
     data:
-      json: src/main/resources/json/countries.json
+      json:
+        path: https://raw.githubusercontent.com/mledoze/countries/master/countries.json
+#        src/main/resources/json/countries.json

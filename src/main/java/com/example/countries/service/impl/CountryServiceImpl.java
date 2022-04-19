@@ -1,14 +1,14 @@
 package com.example.countries.service.impl;
 
 import com.example.countries.converter.CountryConverter;
+import com.example.countries.entity.dto.CountryDto;
 import com.example.countries.entity.simpleEntity.Country;
 import com.example.countries.entity.simpleEntity.CountryBoardPair;
-import com.example.countries.entity.simpleEntity.IdWrapper;
-import com.example.countries.entity.dto.CountryDto;
 import com.example.countries.repository.CountryBoardPairRepo;
 import com.example.countries.repository.CountryRepo;
 import com.example.countries.service.CountryService;
 import lombok.AllArgsConstructor;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,11 +25,6 @@ public class CountryServiceImpl implements CountryService {
     private final CountryBoardPairRepo countryBoardsRepo;
 
     @Override
-    public LinkedList<String> getRouteFromTo(String algorithm, String from, String to) {
-        return null;
-    }
-
-    @Override
     public List<CountryDto> getCountryList() {
         List<Country> countryList = (List<Country>) countryRepo.findAll();
         return countryList.stream()
@@ -38,31 +33,32 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public CountryDto createCountry(CountryDto countryDto) {
-        Country country = countryRepo.save(converter.DtoToCountry(countryDto, new HashSet<CountryBoardPair>()));
-        List<Country> countryBoardedList = countryDto.getCodesOfBoardedCountries()
-                .stream().map(code -> countryRepo.findCountryByCode(code))
+        Country country = countryRepo.save(converter.DtoToCountry(countryDto, new HashSet<>()));
+        List<Country> countryBoardedList = countryDto.getCodesOfBoardedCountries().stream()
+                .map(countryRepo::findCountryByCode)
                 .collect(Collectors.toList());
-        List<CountryBoardPair> countryBoardPairList=countryBoardedList.stream()
-                .map(countryBoarded -> new CountryBoardPair(new IdWrapper(country, countryBoarded)))
-                .collect(Collectors.toList());
-        countryBoardsRepo.saveAll(countryBoardPairList);
-        //fixme answer without part
-        return countryDto;
+        Set<CountryBoardPair> countryBoardPairList = countryBoardedList.stream()
+                .map(
+                        countryBoarded -> new CountryBoardPair(country, countryBoarded)
+                )
+                .collect(Collectors.toSet());
+        country.setCountryBoardPairs(countryBoardPairList);
+        return converter.countryToDto(country);
     }
 
     @Override
     public CountryDto putCountry(CountryDto countryDto) {
-        Country country = countryRepo.save(converter.DtoToCountry(countryDto, new HashSet<CountryBoardPair>()));
-        List<Country> countryBoardedList = countryDto.getCodesOfBoardedCountries()
-                .stream().map(code -> countryRepo.findCountryByCode(code))
+        Country country = countryRepo.save(converter.DtoToCountry(countryDto, new HashSet<>()));
+        List<Country> countryBoardedList = countryDto.getCodesOfBoardedCountries().stream()
+                .map(countryRepo::findCountryByCode)
                 .collect(Collectors.toList());
-        List<CountryBoardPair> countryBoardPairList=countryBoardedList.stream()
-                .map(countryBoarded -> new CountryBoardPair(new IdWrapper(country, countryBoarded)))
-                .collect(Collectors.toList());
-        countryBoardsRepo.saveAll(countryBoardPairList);
-        //fixme make it by one call of DB
-        //fixme answer without part
-        return countryDto;
+        Set<CountryBoardPair> countryBoardPairList = countryBoardedList.stream()
+                .map(
+                        countryBoarded -> new CountryBoardPair(country, countryBoarded)
+                )
+                .collect(Collectors.toSet());
+        country.setCountryBoardPairs(countryBoardPairList);
+        return converter.countryToDto(country);
     }
 
     @Override
@@ -73,27 +69,23 @@ public class CountryServiceImpl implements CountryService {
 
     public void createCountryList(List<CountryDto> countryDtoList) {
         Country country;
-        Map<Country, List<String>> countryBroadCountryIdMap = new HashMap<>();
+        List<CountryBoardPair> countryBoardPairsForSaving = new ArrayList<>();
+        Map<Country, List<String>> countryAndCodesBoardCountry = new HashMap<>();
+
         for (CountryDto countryDto : countryDtoList) {
-            country = countryRepo.save(converter.DtoToCountry(countryDto,
-                    countryDto.getCodesOfBoardedCountries().stream()
-                            .map(countryBoardsRepo::findCountryBoardPairByIdWrapper_CountryBoarded_Code)
-                            .collect(Collectors.toSet()))
-            );
-            countryBroadCountryIdMap.put(country, countryDto.getCodesOfBoardedCountries());
+            country = countryRepo.save(converter.DtoToCountry(countryDto, new HashSet<>()));
+            countryAndCodesBoardCountry.put(country, countryDto.getCodesOfBoardedCountries());
         }
-        for (Map.Entry<Country, List<String>> entry : countryBroadCountryIdMap.entrySet()) {
-            //fixme repeat (separate method)-> go to separate service method
-            List<Country> countryBoardedList = entry.getValue().stream()
+
+        for (Map.Entry<Country, List<String>> entry : countryAndCodesBoardCountry.entrySet()) {
+            List<CountryBoardPair> countryBoardedList = entry.getValue().stream()
                     .map(countryRepo::findCountryByCode)
+                    .map(
+                            savedCountry -> new CountryBoardPair(entry.getKey(), savedCountry)
+                    )
                     .collect(Collectors.toList());
-            for (int i = 0; i < countryBoardedList.size(); i++) {
-                System.out.println("index=" + i);
-                countryBoardsRepo.save(
-                        new CountryBoardPair(
-                                new IdWrapper(entry.getKey(), countryBoardedList.get(i))
-                        ));
-            }
+            countryBoardPairsForSaving.addAll(countryBoardedList);
         }
+        countryBoardsRepo.saveAll(countryBoardPairsForSaving);
     }
 }

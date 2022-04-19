@@ -21,4 +21,8 @@ public class IdWrapper implements Serializable {
     @JoinColumn(name = "id_board_country", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Country countryBoarded;
+
+    public IdWrapper(Country countryBoarded) {
+        this.countryBoarded = countryBoarded;
+    }
 }

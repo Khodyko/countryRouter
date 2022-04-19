@@ -19,4 +19,24 @@ public class CountryBoardPair implements Serializable {
 
     @EmbeddedId
     IdWrapper idWrapper;
+
+    public CountryBoardPair(Country countryMain, Country countryBoarded) {
+        this.idWrapper =new IdWrapper(countryMain,countryBoarded);
+    }
+
+    public Country getCountryMain() {
+        return idWrapper.getCountryMain();
+    }
+
+    public Country getCountryBoarded() {
+        return idWrapper.getCountryBoarded();
+    }
+
+    public void setCountryMain(Country countryMain) {
+        this.idWrapper.setCountryMain(countryMain);
+    }
+
+    public void setCountryBoarded(Country countryBoarded) {
+        this.idWrapper.setCountryMain(countryBoarded);
+    }
 }

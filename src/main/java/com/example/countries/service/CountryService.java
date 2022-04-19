@@ -2,16 +2,21 @@ package com.example.countries.service;
 
 import com.example.countries.entity.dto.CountryDto;
 
-import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Service of Country Entity.
+ *  @see CountryDto
+ *  @see com.example.countries.entity.simpleEntity.Country
+ */
 public interface CountryService {
-    //fixme transactions!!!!
-    //fixme add algorithm choice mechanism
-    LinkedList<String> getRouteFromTo(String algorithm, String from, String to);
+
     List<CountryDto> getCountryList();
+
     CountryDto createCountry(CountryDto countryDto) throws Exception;
+
     CountryDto putCountry(CountryDto countryDto);
+
     void deleteCountry(Long id);
 
 }

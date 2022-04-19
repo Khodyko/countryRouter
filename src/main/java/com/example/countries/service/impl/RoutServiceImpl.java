@@ -2,7 +2,6 @@ package com.example.countries.service.impl;
 
 import com.example.countries.entity.simpleEntity.Country;
 import com.example.countries.entity.simpleEntity.CountryBoardPair;
-import com.example.countries.entity.simpleEntity.IdWrapper;
 import com.example.countries.entity.simpleEntity.Rout;
 import com.example.countries.repository.CountryRepo;
 import com.example.countries.service.DistanceCalculator;
@@ -10,7 +9,6 @@ import com.example.countries.service.RoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.awt.font.TextHitInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -89,8 +87,8 @@ public class RoutServiceImpl implements RoutService {
 
     private List<Country> getBoardedCountries(Country country){
         return country.getCountryBoardPairs().stream()
-                .map(CountryBoardPair::getIdWrapper)
-                .map(IdWrapper::getCountryBoarded).collect(Collectors.toList());
+                .map(CountryBoardPair::getCountryBoarded)
+                .collect(Collectors.toList());
     }
 
 }

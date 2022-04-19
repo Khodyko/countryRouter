@@ -5,9 +5,9 @@ import com.example.countries.entity.response.CountryResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
-
 @RequestMapping("/countries")
 public interface CountryController {
 
@@ -23,13 +23,13 @@ public interface CountryController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    CountryResponse createCountry(@RequestBody CountryRequest countryRequest);
+    CountryResponse createCountry(@Valid   @RequestBody CountryRequest countryRequest);
 
     @ResponseStatus(code = HttpStatus.OK)
     @PutMapping
-    CountryResponse putCountry(@RequestBody CountryRequest countryRequest);
+    CountryResponse putCountry(@Valid  @RequestBody CountryRequest countryRequest);
 
     @ResponseStatus(code = HttpStatus.OK)
     @DeleteMapping("/{id}")
-    void deleteCountry(@PathVariable Long id);
+    void deleteCountry(@Min(1) @PathVariable Long id);
 }

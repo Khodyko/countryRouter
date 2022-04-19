@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @Configuration
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableAutoConfiguration
 @ComponentScan(basePackages = { "com.example.countries.*" })
+@EnableWebMvc
 //@EntityScan("com.example.countries.*")
 public class CountriesApplication {
     public static void main(String[] args) {
