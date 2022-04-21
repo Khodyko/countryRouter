@@ -25,7 +25,7 @@ public class Initializer implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        List<CountryDto> countryDtoList = jsonSpecificMapper.getCountryFromFile(jsonPath);
+        List<CountryDto> countryDtoList = jsonSpecificMapper.getCountryFromJsonLink(jsonPath);
         countryService.createCountryList(countryDtoList);
     }
 }

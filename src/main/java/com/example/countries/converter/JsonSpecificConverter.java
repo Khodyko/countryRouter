@@ -27,7 +27,7 @@ import java.util.List;
 @Component
 public class JsonSpecificConverter {
 
-    public List<CountryDto> getCountryFromFile(String jsonUrlPath) {
+    public List<CountryDto> getCountryFromJsonLink(String jsonUrlPath) {
         List<CountryDto> countryDtoList = new ArrayList<>();
         CountryDto countryDto;
         List<String> codeOfBorderedCountries;
